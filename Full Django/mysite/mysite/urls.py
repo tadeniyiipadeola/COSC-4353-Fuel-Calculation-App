@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+import Fuel_Price.views as views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("", views.homepage, name="homepage"),
 ]
