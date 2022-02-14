@@ -1,15 +1,3 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './EntryPage.css';
-import reportWebVitals from './reportWebVitals';
-
-/*ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);*/
-
 const { Component } = React
 
 class EntryPage extends Component {
@@ -115,10 +103,4 @@ class EntryPage extends Component {
   }
 }
 
-ReactDOM.render(<EntryPage/>, document.getElementById('root'))
-
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-//reportWebVitals();
+ReactDOM.render(<EntryPage/>, document.getElementById("app"))
