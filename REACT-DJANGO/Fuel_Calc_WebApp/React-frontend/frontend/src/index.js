@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import Profile from './ProfilePage';
-import FuelQuoteForm from './FuelQuoteForm';
+import App from './App';
+import Profile from './Pages/ProfilePage';
+import FuelQuoteForm from './Pages/FuelQuoteForm';
+import FuelQuoteHistory from './Pages/FuelQuoteHistory';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <FuelQuoteForm />
+    <FuelQuoteHistory />
   </React.StrictMode>,
   document.getElementById('root')
 );

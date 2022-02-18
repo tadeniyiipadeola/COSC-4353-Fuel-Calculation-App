@@ -1,21 +1,19 @@
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Profile from "./Pages/ProfilePage"
+import FuelQuoteForm from "./Pages/FuelQuoteForm"
+import FuelQuoteHistory from "./Pages/FuelQuoteHistory"
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <navbar />
+      <Routes>
+        <Route path='/' exact component={Profile} />
+        <Route path='/FuelQuoteForm' component={FuelQuoteForm} />
+        <Route path='/FuelQuoteHistory' component={FuelQuoteHistory} />
+      </Routes>
+    </Router>
   );
 }
 

@@ -1,6 +1,7 @@
 import {Modal, InputGroup, Form, Button} from 'react-bootstrap'
 import React, { useEffect, useState } from "react";
 import './FuelQuoteForm.css';
+import 'bootstrap/dist/css/bootstrap.css';
 
 function FuelQuoteForm() {
 
@@ -18,6 +19,20 @@ function FuelQuoteForm() {
 
     return (
     <div className="FuelQuoteForm">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Fuel Quote Calculator App - Group 26</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li><a href="./ProfilePage">Profile</a></li>
+                    <li><a href="./FuelQuoteForm">Fuel Quote Calculator</a></li>
+                    <li><a href="./FuelQuoteHistory">Fuel Quote History</a></li>
+                    <li><a href="#">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formIncidentName">
                 <Form.Label>Gallons Requested </Form.Label>

@@ -1,6 +1,7 @@
-import {Modal, InputGroup, Form, Button} from 'react-bootstrap'
+import {Modal, Alert, InputGroup, Form, Button} from 'react-bootstrap'
 import React, { useEffect, useState } from "react";
 import './Profile.css';
+import 'bootstrap/dist/css/bootstrap.css';
 
 function Profile() {
 
@@ -18,6 +19,20 @@ function Profile() {
 
     return (
     <div className="Profile">
+        <nav class="navbar navbar">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Fuel Quote Calculator App - Group 26</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li><a href="./Pages/ProfilePage">Profile</a></li>
+                    <li><a href="./Pages/FuelQuoteForm">Fuel Quote Calculator</a></li>
+                    <li><a href="./Pages/FuelQuoteHistory">Fuel Quote History</a></li>
+                    <li><a href="#">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formIncidentName">
                 <Form.Label>Full Name: </Form.Label>
