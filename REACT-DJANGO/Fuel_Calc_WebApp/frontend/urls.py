@@ -4,6 +4,6 @@ from .views import index
 
 urlpatterns = [
     path('', index),
-    path('register', index),
-    path('profile', index),
+    path('Register', index),
+    # path('Profile', index),
 ]

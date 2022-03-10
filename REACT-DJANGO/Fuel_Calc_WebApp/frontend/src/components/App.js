@@ -1,24 +1,23 @@
+import React, { Component } from "react";
+import { render } from "react-dom";
+import Homepage from "./Homepage";
 
-//Used for render  the application in react. 
-import React, {Component} from "react";
-import {render} from "react-dom"
-import HomePage from "./Homepage";
 
 export default class App extends Component{
-    constructor(props){
-        super(props);
-    }
+  constructor(props){
+    super(props);
+  }
+  render() 
+  {
+    return (
+      <div>
+        <Homepage/>
 
-    render() {
-        return (
-            <div>
-                <HomePage/>
+      </div>  
+    );  
 
-            </div>
-        )
-
-    }
+  }
 }
 
 const appDiv = document.getElementById("app");
-render(<App/>, appDiv);
+render(<App />, appDiv);
