@@ -27,3 +27,8 @@ class ProfileChangeSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
         fields = ('fullName', 'addressOne', 'addressTwo', 'city', 'inState', 'zipCode')
+
+class FuelQuoteFormSubmitSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FuelQuoteForm
+        fields = ('gallonsRequested', 'deliveryAddressOne', 'deliveryAddressTwo', 'deliveryDate', 'pricePerGallon', 'totalDue')

@@ -34,7 +34,7 @@ class UserProfile(models.Model):
 
 class FuelQuoteForm(models.Model):
     userID = models.CharField(max_length=100, default="")
-    gallonsRequested = models.BigIntegerField(default=0, validators=[validators.MinLengthValidator(1)])
+    gallonsRequested = models.BigIntegerField(default=0)
     deliveryAddressOne = models.CharField(max_length=100, default="", validators=[validators.MinLengthValidator(1)])
     deliveryAddressTwo = models.CharField(max_length=100, default="")
     deliveryDate = models.DateField(default='01/01/2020')

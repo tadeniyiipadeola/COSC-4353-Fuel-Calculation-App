@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics, status
 from .models import Login, UserProfile, FuelQuoteForm
-from .serializers import LoginSerializer, UserProfileSerializer, FuelQuoteFormSerializer, RegisterUserSerializer, ProfileChangeSerializer
+from .serializers import LoginSerializer, UserProfileSerializer, FuelQuoteFormSerializer, RegisterUserSerializer, ProfileChangeSerializer, FuelQuoteFormSubmitSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -69,8 +69,38 @@ class ProfileChangeView(APIView):
                 newUserProfile.inState = inState
                 newUserProfile.zipCode = zipCode
                 newUserProfile.userID = self.request.sessions.session_key
-                newLogin.save(update_fields=['fullName', 'addressOne', 'addressTwo', 'city', 'inState', 'zipCode'])
+                newUserProfile.save(update_fields=['fullName', 'addressOne', 'addressTwo', 'city', 'inState', 'zipCode'])
             else:
-                newLogin = UserProfile(userID=userID, fullName=fullName, addressOne=addressOne, addressTwo=addressTwo, city=city, inState=inState, zipCode=zipCode)
+                newUserProfile = UserProfile(userID=userID, fullName=fullName, addressOne=addressOne, addressTwo=addressTwo, city=city, inState=inState, zipCode=zipCode)
             
             return Response(ProfileChangeSerializer(newUserProfile).data, status=status.HTTP_201_CREATED)
+
+class FuelQuoteFormSubmitView(APIView):
+    serializer_class = FuelQuoteForm
+
+    def post(self, request, format=None):
+        if not self.request.session.exists(self.request.session.session_key):
+            self.request.session.create()
+
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            gallonsRequested = serializer.data.gallonsRequested
+            deliveryAddressOne = serializer.data.deliveryAddressOne
+            deliveryAddressTwo = serializer.data.deliveryAddressTwo
+            deliveryDate = serializer.data.deliveryDate
+            pricePerGallon = .10
+            totalDue = 100
+            userID = self.request.sessions.session_key
+            queryset = UserProfile.objects.filter(userID=userID)
+            if queryset.exists():
+                newUserProfile = queryset[0]
+                newFuelQuoteForm.gallonsRequested = gallonsRequested
+                newFuelQuoteForm.deliveryAddressOne = deliveryAddressOne
+                newFuelQuoteForm.deliveryAddressTwo = deliveryAddressTwo
+                newFuelQuoteForm.deliveryDate = deliveryDate
+                newFuelQuoteForm.userID = self.request.sessions.session_key
+                newFuelQuoteForm.save(update_fields=['gallonsRequested', 'deliveryAddressOne', 'deliveryAddressTwo', 'deliveryDate'])
+            else:
+                newFuelQuoteForm = FuelQuoteForm(userID=userID, gallonsRequested=gallonsRequested, deliveryAddressOne=deliveryAddressOne, deliveryAddressTwo=deliveryAddressTwo, deliveryDate=deliveryDate, pricePerGallon=pricePerGallon, totalDue=totalDue)
+            
+            return Response(ProfileChangeSerializer(newFuelQuoteForm).data, status=status.HTTP_201_CREATED)
