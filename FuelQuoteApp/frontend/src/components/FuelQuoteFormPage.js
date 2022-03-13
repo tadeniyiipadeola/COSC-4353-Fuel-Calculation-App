@@ -80,7 +80,7 @@ export default class FuelQuoteFormPage extends Component {
     }
 
     getFormDetails() {
-        fetch("/api/getFuelQuoteFormData" + "?userID=" + "" /* this.username */).then((response) => response.json()).then((data) => {
+        fetch("/api/getFuelQuoteFormData" + "?userID=" + "" /* this.userID */).then((response) => response.json()).then((data) => {
           this.setState({
             deliveryAddressOne: data.deliveryAddressOne,
           })
