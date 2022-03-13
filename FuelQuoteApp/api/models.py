@@ -19,12 +19,12 @@ def generateUniqueID():
     return id
 
 class Login(models.Model):
-    userID = models.CharField(max_length=100, default="", unique=True)
+    userID = models.CharField(max_length=100, default="", unique=False)
     username = models.CharField(max_length=100, default="", unique=True)
     password = models.CharField(max_length=100, default="", unique=False)
 
 class UserProfile(models.Model):
-    userID = models.CharField(max_length=100, default="", unique=True)
+    userID = models.CharField(max_length=100, default="", unique=False)
     fullName = models.CharField(max_length=50, default="", validators=[validators.MinLengthValidator(1)])
     addressOne = models.CharField(max_length=100, default="", validators=[validators.MinLengthValidator(1)])
     addressTwo = models.CharField(max_length=100, default="")
