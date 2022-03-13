@@ -29,6 +29,15 @@ class GetLoginView(APIView):
         if username != None:
                 return Response(status=status.HTTP_200_OK)
 
+class GetFuelQuoteFormView(APIView):
+    serializer_class = FuelQuoteForm
+    lookup_url_kwarg = 'userID'
+
+    def get(self, request, format=None):
+        userID = request.GET.get(self.lookup_url_kwarg)
+        if userID != None:
+                return Response(status=status.HTTP_200_OK)
+
 class RegisterUserView(APIView):
     serializer_class = LoginView
 

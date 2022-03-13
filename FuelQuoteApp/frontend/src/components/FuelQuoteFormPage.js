@@ -21,6 +21,7 @@ export default class FuelQuoteFormPage extends Component {
         this.handlePricePerGallonChange = this.handlePricePerGallonChange.bind(this);
         this.handleTotalDueChange = this.handleTotalDueChange.bind(this);
         this.handleFuelQuoteSumbit = this.handleFuelQuoteSumbit.bind(this);
+        this.getFormDetails = this.getFormDetails.bind(this);
     }
 
     handleGallonsRequestedChange(e) {
@@ -78,6 +79,14 @@ export default class FuelQuoteFormPage extends Component {
         ).then((data) => console.log(data));
     }
 
+    getFormDetails() {
+        fetch("/api/getFuelQuoteFormData" + "?userID=" + "" /* this.username */).then((response) => response.json()).then((data) => {
+          this.setState({
+            deliveryAddressOne: data.deliveryAddressOne,
+          })
+        })
+      }
+
     render() {
         return (
             <div>
@@ -104,11 +113,11 @@ export default class FuelQuoteFormPage extends Component {
                         </li>
                         <li>
                             <label for="pricePerGallon">Price per Gallon: </label>
-                            <input type="number" id="pricePerQallon" disabled onChange={this.handlePricePerGallonChange}/>
+                            <input type="number" id="pricePerQallon" disabled placeholder={.1} onChange={this.handlePricePerGallonChange}/>
                         </li>
                         <li>
                             <label for="totalAmountDue">Total Amount Due: </label>
-                            <input type="number" id="totalAmountDue" disabled onChange={this.handleTotalDueChange}/>
+                            <input type="number" id="totalAmountDue" disabled placeholder={100} onChange={this.handleTotalDueChange}/>
                         </li>
                     </ul>
                 </fieldset>
