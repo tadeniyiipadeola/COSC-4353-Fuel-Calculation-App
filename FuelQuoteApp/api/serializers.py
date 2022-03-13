@@ -1,0 +1,17 @@
+from rest_framework import serializers
+from .models import Login, UserProfile, FuelQuoteForm
+
+class LoginSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Login
+        fields = ('id', 'userID', 'username', 'password')
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserProfile
+        fields = ('id', 'userID', 'fullName', 'addressOne', 'addressTwo', 'city', 'inState', 'zipCode')
+
+class FuelQuoteFormSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FuelQuoteForm
+        fields = ('id', 'userID', 'gallonsRequested', 'deliveryAddressOne', 'deliveryAddressTwo', 'deliveryDate', 'pricePerGallon', 'totalDue')
