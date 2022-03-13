@@ -1,3 +1,4 @@
+from cgitb import lookup
 from django.shortcuts import render
 from rest_framework import generics, status
 from .models import Login, UserProfile, FuelQuoteForm
@@ -18,6 +19,18 @@ class UserProfileView(generics.CreateAPIView):
 class FuelQuoteFormView(generics.CreateAPIView):
     queryset = FuelQuoteForm.objects.all()
     serializer_class = FuelQuoteFormSerializer
+
+class GetLoginView(APIView):
+    serializer_class = Login
+    lookup_url_kwarg = 'username'
+
+    def get(self, request, format=None):
+        username = request.GET.get(self.lookup_url_kwarg)
+        if username != None:
+            login = Login.objects.filter(username)
+            if len(login) > 0:
+                data = LoginSerializer(login[0]).data
+                return Response(data, status=status.HTTP_200_OK)
 
 class RegisterUserView(APIView):
     serializer_class = LoginView
