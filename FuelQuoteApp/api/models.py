@@ -8,16 +8,6 @@ from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 
-def generateUniqueID():
-    length = 32
-
-    while True:
-        id = ''.join(random.choices(string.ascii_letters, k = length))
-        if Login.objects.filter(userID=id).count() == 0:
-            break
-
-    return id
-
 class Login(models.Model):
     userID = models.CharField(max_length=100, default="", unique=False)
     username = models.CharField(max_length=100, default="", unique=True)
