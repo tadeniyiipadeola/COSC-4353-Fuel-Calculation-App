@@ -14,12 +14,7 @@ export default class FuelQuoteHistoryPage extends Component {
     }
 
     getFormDetails() {
-        fetch('/api/getFuelQuoteFormData/1/', (data) => {
-            this.setState({
-                formFields: data.fields
-            });
-        });
-        fetch("/api/getFuelQuoteFormData" + "?userID=" + "" /* this.userID */).then((response) => response.json()).then((data) => {
+        fetch("/api/getFuelQuoteFormData" + "?userID=" + "420" /* this.userID */).then((response) => response.json()).then((data) => {
           this.setState({
             deliveryAddressOne: data.deliveryAddressOne,
           })
@@ -33,8 +28,17 @@ export default class FuelQuoteHistoryPage extends Component {
                 <Button component={Link} to="/fuelQuoteForm">See Fuel Quote Form</Button>
                 <Button component={Link} to="/fuelQuoteHistory">See Fuel Quote History Form</Button>
 
-                <button onClick={this.getFormDetails}>Testing, get form data</button>
+                <button onClick={this.getFormDetails}>This changed</button>
                 <h1>This is the fuel quote history page</h1>
+
+                <div className='item-container'>
+                    {props.map((props) => (
+                    <div className='fuelQuoteHistoryTable' key={props.userID}>
+                        <h3>{props.fullName}</h3>
+                    </div>
+                    ))}
+                </div>
+                
             </div>
           
         );
