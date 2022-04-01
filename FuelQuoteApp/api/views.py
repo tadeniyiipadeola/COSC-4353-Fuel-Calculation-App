@@ -3,6 +3,7 @@ from .models import Login, UserProfile, FuelQuoteForm
 from .serializers import LoginSerializer, UserProfileSerializer, FuelQuoteFormSerializer, RegisterUserSerializer, ProfileChangeSerializer, FuelQuoteFormSubmitSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.contrib.auth.hashers import make_password
 
 class LoginView(generics.CreateAPIView):
     queryset = Login.objects.all()
@@ -60,8 +61,10 @@ class RegisterUserView(APIView):
         if serializer.is_valid():
             username = serializer.data.username
             password = serializer.data.password
+            #Encrypting password. Note: need to implement back viewing with django, but currently functions fine
+            passwordEncrypt = make_password(password)
             userID = self.request.sessions.session_key
-            newLogin = Login(userID=userID, username=username, password=password)
+            newLogin = Login(userID=userID, username=username, password=passwordEncrypt)
             return Response(RegisterUserSerializer(newLogin).data, status=status.HTTP_201_CREATED)
 
 class ProfileChangeView(APIView):
