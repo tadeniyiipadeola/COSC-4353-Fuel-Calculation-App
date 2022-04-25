@@ -8,28 +8,13 @@ class LoginView(generics.CreateAPIView):
     queryset = Login.objects.all()
     serializer_class = LoginSerializer
 
-    def get(self, request, format=None):
-        users = Login.objects.all()
-        serializer = LoginSerializer(users, many=True)
-        return Response(serializer.data)
-
 class UserProfileView(generics.CreateAPIView):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
 
-    def get(self, request, format=None):
-        users = UserProfile.objects.all()
-        serializer = UserProfileSerializer(users, many=True)
-        return Response(serializer.data)
-
 class FuelQuoteFormView(generics.CreateAPIView):
     queryset = FuelQuoteForm.objects.all()
     serializer_class = FuelQuoteFormSerializer
-
-    def get(self, request, format=None):
-        users = FuelQuoteForm.objects.all()
-        serializer = FuelQuoteFormSerializer(users, many=True)
-        return Response(serializer.data)
 
 class GetLoginView(APIView):
     serializer_class = Login
@@ -83,6 +68,13 @@ class ProfileChangeView(APIView):
             newUserProfile = UserProfile(userID=userID, fullName=fullName, addressOne=addressOne, addressTwo=addressTwo, city=city, inState=inState, zipCode=zipCode)
             
             return Response(ProfileChangeSerializer(newUserProfile).data, status=status.HTTP_201_CREATED)
+
+    def get(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            userID = self.request.sessions.session_key
+            queryset = UserProfile.objects.filter(created_user_id = request.userID)
+            serializer_class = UserProfileSerializer
 
 class FuelQuoteFormSubmitView(APIView):
     serializer_class = FuelQuoteForm
