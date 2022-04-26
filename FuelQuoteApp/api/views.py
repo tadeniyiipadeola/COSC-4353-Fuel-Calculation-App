@@ -105,3 +105,10 @@ class FuelQuoteFormSubmitView(APIView):
             userID = self.request.sessions.session_key
             newFuelQuoteForm = FuelQuoteForm(userID=userID, gallonsRequested=gallonsRequested, deliveryAddressOne=deliveryAddressOne, deliveryAddressTwo=deliveryAddressTwo, deliveryDate=deliveryDate, pricePerGallon=pricePerGallon, totalDue=totalDue)
             return Response(ProfileChangeSerializer(newFuelQuoteForm).data, status=status.HTTP_201_CREATED)
+
+
+# class updateUserProfileView(APIView):
+#     def put(self, request, format=None):
+        # try:
+        #     user = self.request.user
+
