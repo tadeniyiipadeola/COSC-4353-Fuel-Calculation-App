@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
 import Homepage from "./Homepage";
-import Layout from './hocs/Layout';
+
 
 export default class App extends Component {
     constructor(props) {
@@ -12,10 +12,6 @@ export default class App extends Component {
         return (
             <div>
                 <Homepage />
-                <Layout>
-                    
-                </Layout>
-
             </div>
         );
     }

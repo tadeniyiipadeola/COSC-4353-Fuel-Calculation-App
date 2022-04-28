@@ -3,6 +3,7 @@ from .views import index
 
 urlpatterns = [
     path('', index),
+    path('samuser', index),
     path('login', index),
     path('register', index),
     path('fuelQuoteForm', index),

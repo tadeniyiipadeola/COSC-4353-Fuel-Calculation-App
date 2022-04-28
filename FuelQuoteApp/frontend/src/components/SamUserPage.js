@@ -1,12 +1,18 @@
-import REact from 'react';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
-function App() {
-    return (
-        <div>
-            SamUSER
-            Great Job
-        </div>
+
+
+
+export default class SamUserPage extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (
+            <div> hello there it worked  </div>
         );
-}
+    }
 
-export default App;
+}

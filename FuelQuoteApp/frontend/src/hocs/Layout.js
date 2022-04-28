@@ -1,5 +1,5 @@
 import React from 'react';
-import Navbar from '../components/NavBar';
+import Navbar from '../containers/NavBar';
 
 const layout = (props) => (
     <div>
@@ -8,4 +8,4 @@ const layout = (props) => (
     </div>
 );
 
-export default App;
+export default layout;
