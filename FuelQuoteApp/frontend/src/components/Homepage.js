@@ -7,6 +7,7 @@ import FuelQuoteHistoryPage from "./FuelQuoteHistoryPage";
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 import SamUserPage from "./SamUserPage"
 import Layout from '../hocs/Layout'
+import '../sass/main.scss'
 export default class Homepage extends Component {
     constructor(props) {
         super(props);
