@@ -28,7 +28,7 @@ export default class LoginPage extends Component {
   }
 
     getLoginDetails() {
-      fetch("/api/getLogin" + "?username=" + "check" /* this.username */).then((response) => response.json()).then((data) => {
+      fetch("/api/getLogin" + "?username=" + this.state.username /* this.username */).then((response) => response.json()).then((data) => {
         this.setState({
           username: data.username,
           password: data.password

@@ -11,7 +11,7 @@ export default class ProfilePage extends Component {
        addressTwo: "None",
        city: "stuffsburg",
        inState: "inState",
-       zipCode: "8675309"
+       zipCode: ""
     }
     
     this.handleFullNameChange = this.handleFullNameChange.bind(this);

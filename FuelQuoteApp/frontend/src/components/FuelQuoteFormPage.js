@@ -10,7 +10,10 @@ export default class FuelQuoteFormPage extends Component {
             deliveryAddressOne: "failed",
             deliveryAddressTwo: "None",
             deliveryDate: "01/01/13",
-            pricePerGallon: .10,
+            pricePerGallon: 1.50,
+            requestedFactor: .03,
+            inStateFactor: .02,
+            rateHistoryFactor: 0.01,
             totalDue: 100
         }
         
@@ -24,9 +27,25 @@ export default class FuelQuoteFormPage extends Component {
         this.getFormDetails = this.getFormDetails.bind(this);
     }
 
+    margin = () => 1.1 + this.state.requestedFactor + this.state.inStateFactor - this.state.rateHistoryFactor
+    pricePerGallonDisplay = () => (this.state.pricePerGallon * this.margin())
+    result = () => this.pricePerGallonDisplay() * this.state.gallonsRequested + 0
+    handleUpdateGallonsRequested = e => {
+        if (this.state.gallonsRequested >= 999) {
+            this.setState({ requestedFactor: .02})
+        }
+        if (this.state.gallonsRequested < 1000) {
+            this.setState({ requestedFactor: .03})
+        }
+        this.setState({ 
+            gallonsRequested: +e.target.value
+        })
+    }
+    handleUpdateDeliveryDate = e => this.setState({ deliveryDate: +e.target.value})
+
     handleGallonsRequestedChange(e) {
         this.setState({
-            addressOne: e.target.value,
+            gallonsRequested: e.target.value,
         });
     }
 
@@ -38,25 +57,25 @@ export default class FuelQuoteFormPage extends Component {
 
     handleDeliveryAddressTwoChange(e) {
         this.setState({
-            addressOne: e.target.value,
+            addressTwo: e.target.value,
         });
     }
 
     handleDeliveryDateChange(e) {
         this.setState({
-            addressOne: e.target.value,
+            deliveryDate: e.target.value,
         });
     }
 
     handlePricePerGallonChange(e) {
         this.setState({
-            addressOne: e.target.value,
+            pricePerGallon: e.target.value,
         });
     }
 
     handleTotalDueChange(e) {
         this.setState({
-            addressOne: e.target.value,
+            totalDue: e.target.value,
         });
     }
 
@@ -101,11 +120,11 @@ export default class FuelQuoteFormPage extends Component {
                     <ul>
                         <li>
                             <label for="gallonsRequested">Gallons Requested: </label>
-                            <input type="number" id="gallonsRequested" required min={0} onChange={this.handleGallonsRequestedChange}/>
+                            <input type="number" id="gallonsRequested" required min={0} onChange={this.handleUpdateGallonsRequested}/>
                         </li>
                         <li>
                             <label for="deliveryAddress">DeliveryAddress: </label>
-                            <input type="text" id="deliveryAddress" disabled placeholder="Comes from Profile info" onChange={this.handleDeliveryAddressOneChange}/>
+                            <input type="text" id="deliveryAddress" disabled placeholder="123 Placeholder Drive" onChange={this.handleDeliveryAddressOneChange}/>
                         </li>
                         <li>
                             <label for="deliveryDate">Delivery Date: </label>
@@ -113,11 +132,13 @@ export default class FuelQuoteFormPage extends Component {
                         </li>
                         <li>
                             <label for="pricePerGallon">Price per Gallon: </label>
-                            <input type="number" id="pricePerQallon" disabled placeholder={.1} onChange={this.handlePricePerGallonChange}/>
+                            <input type="number" id="pricePerQallon" disabled placeholder={(Math.round(this.pricePerGallonDisplay() * 1000) / 1000).toFixed(3)} onChange={this.handlePricePerGallonChange}/>
                         </li>
                         <li>
-                            <label for="totalAmountDue">Total Amount Due: </label>
-                            <input type="number" id="totalAmountDue" disabled placeholder={100} onChange={this.handleTotalDueChange}/>
+                            <label for="totalAmountDue">Total Amount Due: ${(Math.round(this.result() * 100) / 100).toFixed(2)}</label>
+                        </li>
+                        <li>
+                            <label for="marginPlaceholder">Margin: {(Math.round(this.margin() * 100) / 100).toFixed(2)}</label>
                         </li>
                     </ul>
                 </fieldset>
