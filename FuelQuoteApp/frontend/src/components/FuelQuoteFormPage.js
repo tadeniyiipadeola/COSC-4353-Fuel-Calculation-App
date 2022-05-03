@@ -25,20 +25,30 @@ export default class FuelQuoteFormPage extends Component {
         this.handleTotalDueChange = this.handleTotalDueChange.bind(this);
         this.handleFuelQuoteSumbit = this.handleFuelQuoteSumbit.bind(this);
         this.getFormDetails = this.getFormDetails.bind(this);
+        this.margin = this.margin.bind(this);
+        this.pricePerGallonDisplay = this.pricePerGallonDisplay.bind(this);
+        this.result = this.result.bind(this);
     }
 
     margin = () => 1.1 + this.state.requestedFactor + this.state.inStateFactor - this.state.rateHistoryFactor
-    pricePerGallonDisplay = () => (this.state.pricePerGallon * this.margin())
+    pricePerGallonDisplay = () => (1.5 * this.margin())
     result = () => this.pricePerGallonDisplay() * this.state.gallonsRequested + 0
     handleUpdateGallonsRequested = e => {
         if (this.state.gallonsRequested >= 999) {
-            this.setState({ requestedFactor: .02})
+            this.setState({ 
+                requestedFactor: .02,
+                pricePerGallon: this.pricePerGallonDisplay(),
+            })
         }
         if (this.state.gallonsRequested < 1000) {
-            this.setState({ requestedFactor: .03})
+            this.setState({ 
+                requestedFactor: .03,
+                pricePerGallon: this.pricePerGallonDisplay(),
+            })
         }
         this.setState({ 
-            gallonsRequested: +e.target.value
+            gallonsRequested: +e.target.value,
+            totalDue: this.result()
         })
     }
     handleUpdateDeliveryDate = e => this.setState({ deliveryDate: +e.target.value})
@@ -89,8 +99,8 @@ export default class FuelQuoteFormPage extends Component {
               deliveryAddressOne: this.state.deliveryAddressOne,
               deliveryAddressTwo: this.state.deliveryAddressTwo,
               deliveryDate: this.state.deliveryDate,
-              pricePerGallon: this.state.pricePerGallon,
-              totalDue: this.state.totalDue,
+              pricePerGallon: (Math.round(this.state.pricePerGallon * 100) / 100).toFixed(2),
+              totalDue: (Math.round(this.state.totalDue * 100) / 100).toFixed(2),
             }),
         };
         fetch("/api/fuelQuoteFormView", requestFuelQuoteFormSubmit).then((response) =>

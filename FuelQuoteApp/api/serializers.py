@@ -1,7 +1,12 @@
 from dataclasses import field, fields
 from pyexpat import model
 from rest_framework import serializers
-from .models import Login, UserProfile, FuelQuoteForm
+from .models import Login, UserProfile, FuelQuoteForm, CustomUser
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ('id', 'username', 'password')
 
 class LoginSerializer(serializers.ModelSerializer):
     class Meta:

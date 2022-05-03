@@ -38,9 +38,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'api.apps.ApiConfig',
+    'api',
     'rest_framework',
-    'frontend.apps.FrontendConfig'
+    'frontend.apps.FrontendConfig' ,
+
+    'rest_framework.authtoken', 
+    'rest_auth', 
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account', 
+    'allauth.socialaccount',
+    'rest_auth.registration', 
+    'corsheaders', 
 ]
 
 MIDDLEWARE = [
@@ -51,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware' ,
 ]
 
 ROOT_URLCONF = 'FuelQuoteApp.urls'
@@ -129,3 +139,12 @@ STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static")
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'api.CustomUser'
+
+CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
+
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend" ,
+    "allauth.account.auth_backends.AuthenticationBackend" ,
+)
