@@ -95,12 +95,13 @@ export default class FuelQuoteFormPage extends Component {
             headers: {'Content-Type': 'application/json',
             'Accept': 'application/json' },
             body: JSON.stringify({
+              userID: "test",
               gallonsRequested: this.state.gallonsRequested,
               deliveryAddressOne: this.state.deliveryAddressOne,
               deliveryAddressTwo: this.state.deliveryAddressTwo,
               deliveryDate: this.state.deliveryDate,
-              pricePerGallon: (Math.round(this.state.pricePerGallon * 100) / 100).toFixed(2),
-              totalDue: (Math.round(this.state.totalDue * 100) / 100).toFixed(2),
+              pricePerGallon: (Math.round(this.pricePerGallonDisplay() * 100) / 100).toFixed(2),
+              totalDue: (Math.round(this.result() * 100) / 100).toFixed(2),
             }),
         };
         fetch("/api/fuelQuoteFormView", requestFuelQuoteFormSubmit).then((response) =>

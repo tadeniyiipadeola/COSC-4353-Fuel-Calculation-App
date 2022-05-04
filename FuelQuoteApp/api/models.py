@@ -14,7 +14,7 @@ class CustomUser(AbstractUser):
     password = models.CharField(max_length=100, blank=False, default="", unique=False)
 
 class Login(models.Model):
-    userID = models.CharField(max_length=100, blank=False, default="", unique=True)
+    userID = models.CharField(max_length=100, blank=False, default="", unique=False)
     username = models.CharField(max_length=100, blank=False, default="", unique=True)
     password = models.CharField(max_length=100, blank=False, default="", unique=False)
 

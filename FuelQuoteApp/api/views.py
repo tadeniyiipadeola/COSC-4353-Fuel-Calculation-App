@@ -32,22 +32,29 @@ class FuelQuoteFormView(generics.CreateAPIView):
         return Response(serializer.data)
 
 class GetLoginView(APIView):
-    serializer_class = Login
-    lookup_url_kwarg = 'username'
+    serializer_class = LoginSerializer
 
     def get(self, request, format=None):
-        username = request.GET.get(self.lookup_url_kwarg)
-        if username != None:
-                return Response(status=status.HTTP_200_OK)
+        usernameString = request.GET.get('username')
+        passwordString = request.GET.get('password')
+        print(usernameString)
+        print(passwordString)
+        exist = Login.objects.filter(username=usernameString, password=passwordString).exists()
+        if exist == True:
+            return Response(status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
 
 class GetFuelQuoteFormView(APIView):
-    serializer_class = FuelQuoteForm
-    lookup_url_kwarg = 'userID'
+    serializer_class = FuelQuoteFormSerializer
 
     def get(self, request, format=None):
-        userID = request.GET.get(self.lookup_url_kwarg)
-        if userID != None:
-                return Response(status=status.HTTP_200_OK)
+        usernameString = request.GET.get('userID')
+        print(usernameString)
+        users = FuelQuoteForm.objects.filter(userID=usernameString)
+        serializer = FuelQuoteFormSerializer(users, many=True)
+        return Response(serializer.data)
 
 class RegisterUserView(APIView):
     serializer_class = LoginView

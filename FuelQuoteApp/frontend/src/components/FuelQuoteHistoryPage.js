@@ -9,7 +9,7 @@ export default class FuelQuoteHistoryPage extends Component {
     
       async componentDidMount() {
         try {
-          const res = await fetch("/api/fuelQuoteFormView" + "?userID=" + "steve" /* this.userID */);
+          const res = await fetch("/api/getFuelQuoteFormData" + "?userID=" + "test" /* this.userID */);
           const todos = await res.json();
           console.log(todos);
           this.setState({

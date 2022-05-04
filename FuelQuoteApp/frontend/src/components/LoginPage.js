@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Button from '@material-ui/core/Button';
 
@@ -7,7 +7,7 @@ export default class LoginPage extends Component {
         super(props)
         this.state = {
             username: "", 
-            password: ""
+            password: "",
         };
 
         this.getLoginDetails = this.getLoginDetails.bind(this);
@@ -28,11 +28,12 @@ export default class LoginPage extends Component {
   }
 
     getLoginDetails() {
-      fetch("/api/getLogin" + "?username=" + this.state.username /* this.username */).then((response) => response.json()).then((data) => {
+      fetch("/api/getLogin" + "?username=" + this.state.username + "&password=" +this.state.password).then((response) => response.json()).then((data) => {
         this.setState({
-          username: data.username,
-          password: data.password
+          username: data.username, 
+          password: data.password,
         })
+
       })
     }
 
@@ -54,7 +55,7 @@ export default class LoginPage extends Component {
                 </li>
               </ul>
             </fieldset>
-            <button onClick={this.getLoginDetails}>Login</button>
+            <Button onClick={this.getLoginDetails}>Login</Button>;
             <Button component={Link} to="/register">Need an Account?</Button>
           </form>
         </div>
