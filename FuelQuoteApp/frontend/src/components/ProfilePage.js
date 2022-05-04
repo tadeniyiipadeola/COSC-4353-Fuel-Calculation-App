@@ -24,15 +24,24 @@ export default class ProfilePage extends Component {
     this.handleProfileUpdate = this.handleProfileUpdate.bind(this);
   }
 
-  async componentDidMount () {
-    fetch("/api/getProfile" + "?fullName=" + "I" /* this.userID */)
-      // return JSON object
-      .then(res => res.json())
-      // uses object destructuring of passed parameter
-      .then(({ fullName, addressOne, addressTwo, city, inState, zipCode}) => this.setState({fullName, addressOne, addressTwo, city, inState, zipCode}))
-      console.log(this.state.fullName)
-      console.log(this.state.addressOne)
-  }
+  componentDidMount () {
+    fetch("/api/getProfile" + "?fullName=" + "I" /* this.userID */).then(response => response.json())
+    .then((jsonData) => {
+      // jsonData is parsed json object received from url
+      console.log(jsonData);
+      console.log(jsonData[0].fullName);
+      this.state.fullName = jsonData[0].fullName;
+      this.state.addressOne = jsonData[0].addressOne;
+      this.state.addressTwo = jsonData[0].addressTwo;
+      this.state.city = jsonData[0].city;
+      this.state.inState = jsonData[0].inState;
+      this.state.zipCode = jsonData[0].zipCode;
+    })
+    .catch((error) => {
+      // handle your errors here
+      console.error(error)
+    })
+}
 
   /*
   async componentDidMount() {
@@ -122,30 +131,30 @@ export default class ProfilePage extends Component {
               <legend>Profile Information</legend>
               <ul>
                 <li>
-                  <label for="fullName">Full Name: </label>
+                  <label for="fullName">Full Name: (currently: {this.state.fullName})</label>
                   <input type="text" id="fullName" required maxLength={50} placeholder="Required. 50 char limit." onChange={this.handleFullNameChange}/>
                 </li>
                 <li>
-                  <label for="addressOne">Address 1: </label>
+                  <label for="addressOne">Address 1: (currently: {this.state.addressOne})</label>
                   <input type="text" id="addressOne" required maxLength={100} placeholder="Required. 100 char limit." onChange={this.handleAddressOneChange}/>
                 </li>
                 <li>
-                  <label for="addressTwo">Address 2: </label>
+                  <label for="addressTwo">Address 2: (currently: {this.state.addressTwo})</label>
                   <input type="text" id="addressTwo" maxLength={100} placeholder="Optional. 100 char limit." onChange={this.handleAddressTwoChange}/>
                 </li>
                 <li>
-                  <label for="city">City: </label>
+                  <label for="city">City: (currently: {this.state.city})</label>
                   <input type="text" id="city" required maxLength={100} placeholder="Required. 100 char limit." onChange={this.handleCityChange}/>
                 </li>
                 <li>
-                  <label for="inState">State: </label>
+                  <label for="inState">State: (currently: {this.state.inState})</label>
                   <select name = "inState" id="inState" onChange={this.handleInStateChange}>
                       <option value = "inState" selected>In State</option>
                       <option value = "outState">Out of State</option>
                   </select>
                 </li>
                 <li>
-                  <label for="zipCode">ZipCode: </label>
+                  <label for="zipCode">ZipCode: (currently: {this.state.zipCode})</label>
                   <input type="text" id="zipCode" required maxLength={9} minLength={5} placeholder="Required. 5-9 chars only." onChange={this.handleZipCodeChange}/>
                 </li>
               </ul>
