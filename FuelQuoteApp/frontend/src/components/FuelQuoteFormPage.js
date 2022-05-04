@@ -35,7 +35,7 @@ export default class FuelQuoteFormPage extends Component {
     }
 
     componentDidMount () {
-        fetch("/api/getProfile" + "?fullName=" + "I" /* this.userID */).then(response => response.json())
+        fetch("/api/getProfile" + "?fullName=" + "Henry" /* this.userID */).then(response => response.json())
         .then((jsonData) => {
           // jsonData is parsed json object received from url
           this.state.deliveryAddressOne = jsonData[0].addressOne;
@@ -148,7 +148,7 @@ export default class FuelQuoteFormPage extends Component {
             headers: {'Content-Type': 'application/json',
             'Accept': 'application/json' },
             body: JSON.stringify({
-              userID: "test",
+              userID: "newTest",
               gallonsRequested: this.state.gallonsRequested,
               deliveryAddressOne: this.state.deliveryAddressOne,
               deliveryAddressTwo: this.state.deliveryAddressTwo,

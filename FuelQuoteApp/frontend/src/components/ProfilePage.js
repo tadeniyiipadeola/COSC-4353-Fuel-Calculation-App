@@ -25,14 +25,14 @@ export default class ProfilePage extends Component {
   }
 
   componentDidMount () {
-    fetch("/api/getProfile" + "?fullName=" + "I" /* this.userID */).then(response => response.json())
+    fetch("/api/getProfile" + "?fullName=" + "Henry" /* this.userID */).then(response => response.json())
     .then((jsonData) => {
       // jsonData is parsed json object received from url
       console.log(jsonData);
       console.log(jsonData[0].fullName);
       this.state.fullName = jsonData[0].fullName;
       this.state.addressOne = jsonData[0].addressOne;
-      this.state.addressTwo = jsonData[0].addressTwo;
+      //this.state.addressTwo = jsonData[0].addressTwo;
       this.state.city = jsonData[0].city;
       this.state.inState = jsonData[0].inState;
       this.state.zipCode = jsonData[0].zipCode;
