@@ -7,7 +7,7 @@ export default class FuelQuoteFormPage extends Component {
         super(props);
         this.state = {
             inState: "outState",
-            hasHistory: "yes",
+            hasHistory: "no",
             gallonsRequested: 0,
             deliveryAddressOne: "failed",
             deliveryAddressTwo: "None",
@@ -32,6 +32,31 @@ export default class FuelQuoteFormPage extends Component {
         this.margin = this.margin.bind(this);
         this.pricePerGallonDisplay = this.pricePerGallonDisplay.bind(this);
         this.result = this.result.bind(this);
+    }
+
+    componentDidMount () {
+        fetch("/api/getProfile" + "?fullName=" + "I" /* this.userID */).then(response => response.json())
+        .then((jsonData) => {
+          // jsonData is parsed json object received from url
+          this.state.deliveryAddressOne = jsonData[0].addressOne;
+          this.state.inState = jsonData[0].inState;
+          if (this.state.inState == "inState") {
+              this.state.inStateFactor = .02
+          }
+          else {
+            this.state.inStateFactor = .03
+          }
+        })
+        .catch((error) => {
+          // handle your errors here
+          console.error(error)
+        })
+
+        fetch("/api/getFuelQuoteFormData" + "?userID=" + "").then((response) => {
+            if (response.ok) {
+               this.state.hasHistory = "yes"
+            }
+        })
     }
 
     margin = () => 1.1 + this.state.requestedFactor + this.state.inStateFactor - this.state.rateHistoryFactor
@@ -158,14 +183,14 @@ export default class FuelQuoteFormPage extends Component {
                     <legend>Fuel Quote Information</legend>
                     <ul>
                         <li>
-                            <label for="inState">TESTING State: </label>
+                            <label for="inState">TESTING State: (currently: {this.state.inState})</label>
                             <select name = "inState" id="inState" onChange={this.handleInStateChange}>
                                 <option value = "inState">In State</option>
                                 <option value = "outState" selected>Out of State</option>
                             </select>
                         </li>
                         <li>
-                            <label for="hasHistory">TESTING History: </label>
+                            <label for="hasHistory">TESTING History: (currently: {this.state.hasHistory})</label>
                             <select name = "hasHistory" id="hasHistory" onChange={this.handleHistoryChange}>
                                 <option value = "yes">Yes</option>
                                 <option value = "no" selected>No</option>
@@ -176,7 +201,7 @@ export default class FuelQuoteFormPage extends Component {
                             <input type="number" id="gallonsRequested" required min={0} onChange={this.handleUpdateGallonsRequested}/>
                         </li>
                         <li>
-                            <label for="deliveryAddress">DeliveryAddress: </label>
+                            <label for="deliveryAddress">DeliveryAddress: (currently: {this.state.deliveryAddressOne})</label>
                             <input type="text" id="deliveryAddress" disabled placeholder="123 Placeholder Drive" onChange={this.handleDeliveryAddressOneChange}/>
                         </li>
                         <li>
