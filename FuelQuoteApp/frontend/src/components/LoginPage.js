@@ -1,11 +1,13 @@
 import React, { Component, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Button from '@material-ui/core/Button';
+import { Redirect } from 'react-router';
 
 export default class LoginPage extends Component {
     constructor(props){
         super(props)
         this.state = {
+            isLogged: false,
             username: "", 
             password: "",
         };
@@ -28,16 +30,26 @@ export default class LoginPage extends Component {
   }
 
     getLoginDetails() {
-      fetch("/api/getLogin" + "?username=" + this.state.username + "&password=" +this.state.password).then((response) => response.json()).then((data) => {
-        this.setState({
-          username: data.username, 
-          password: data.password,
-        })
-
+      fetch("/api/getLogin" + "?username=" + this.state.username + "&password=" +this.state.password).then((response) => {
+          if (response.ok) {
+            this.state.isLogged = true
+          }
       })
+
+      /*{
+        this.setState({
+          isLogged: true
+        })
+        console.log(isLogged)
+      })*/
     }
 
     render() {
+      if (this.state.isLogged == true) {
+        return (
+          <Button component={Link} to="/profile">Welcome, {this.state.username}! Click here to go to profile</Button>
+        )
+      }
       return (
         <div>
           <form>

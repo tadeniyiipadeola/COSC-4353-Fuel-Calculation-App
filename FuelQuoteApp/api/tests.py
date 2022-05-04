@@ -36,7 +36,7 @@ class CheckProfileTest(TestCase):
 
     def test_view_url_exists_at_desired_location(self):
         response = self.client.get('/api/userProfileView')
-        self.assertEqual(response.status_code, 405)
+        self.assertEqual(response.status_code, 200)
 
     def test_view_url_accessible_by_name(self):
         response = self.client.get('/profile')
@@ -58,7 +58,7 @@ class CheckFormTest(TestCase):
 
     def test_view_url_exists_at_desired_location(self):
         response = self.client.get('/api/fuelQuoteFormView')
-        self.assertEqual(response.status_code,405)
+        self.assertEqual(response.status_code,200)
 
     def test_view_url_accessible_by_name(self):
         response = self.client.get('/fuelQuoteForm')
@@ -91,7 +91,7 @@ class RegisterUserViewTest(TestCase):
 
         # Use this syntax for class-based views.
         response = UserProfileView.as_view()(request)
-        self.assertEqual(response.status_code, 405)
+        self.assertEqual(response.status_code, 200)
 
 class UserProfileViewTest(TestCase):
     def setUp(self):
@@ -114,6 +114,6 @@ class UserProfileViewTest(TestCase):
 
         # Use this syntax for class-based views.
         response = LoginView.as_view()(request)
-        self.assertEqual(response.status_code, 405)
+        self.assertEqual(response.status_code, 200)
 
 # Create your tests here.

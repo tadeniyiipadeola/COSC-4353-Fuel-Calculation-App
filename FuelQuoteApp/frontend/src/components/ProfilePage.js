@@ -6,6 +6,7 @@ export default class ProfilePage extends Component {
   constructor(props){
     super(props);
     this.state = {
+       userID: "test",
        fullName: "you",
        addressOne: "failed",
        addressTwo: "None",
@@ -22,6 +23,35 @@ export default class ProfilePage extends Component {
     this.handleZipCodeChange = this.handleZipCodeChange.bind(this);
     this.handleProfileUpdate = this.handleProfileUpdate.bind(this);
   }
+
+  async componentDidMount () {
+    fetch("/api/getProfile" + "?fullName=" + "I" /* this.userID */)
+      // return JSON object
+      .then(res => res.json())
+      // uses object destructuring of passed parameter
+      .then(({ fullName, addressOne, addressTwo, city, inState, zipCode}) => this.setState({fullName, addressOne, addressTwo, city, inState, zipCode}))
+      console.log(this.state.fullName)
+      console.log(this.state.addressOne)
+  }
+
+  /*
+  async componentDidMount() {
+    try {
+      fetch("/api/getProfile" + "?fullName=" + "I" /* this.userID ).then((response) => response.json()).then((data) => {
+        this.setState({
+          fullName: data.fullName, 
+          addressOne: data.addressOne, 
+          addressTwo: data.addressTwo, 
+          city: data.city, 
+          inState: data.inState, 
+          zipCode: data.zipCode
+        });
+      })
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  */
 
   handleFullNameChange(e) {
       this.setState({

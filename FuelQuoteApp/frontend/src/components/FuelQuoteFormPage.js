@@ -6,17 +6,21 @@ export default class FuelQuoteFormPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            inState: "outState",
+            hasHistory: "yes",
             gallonsRequested: 0,
             deliveryAddressOne: "failed",
             deliveryAddressTwo: "None",
             deliveryDate: "01/01/13",
             pricePerGallon: 1.50,
             requestedFactor: .03,
-            inStateFactor: .02,
+            inStateFactor: .03,
             rateHistoryFactor: 0.01,
             totalDue: 100
         }
         
+        this.handleInStateChange = this.handleInStateChange.bind(this);
+        this.handleHistoryChange = this.handleHistoryChange.bind(this);
         this.handleGallonsRequestedChange = this.handleGallonsRequestedChange.bind(this);
         this.handleDeliveryAddressOneChange = this.handleDeliveryAddressOneChange.bind(this);
         this.handleDeliveryAddressTwoChange = this.handleDeliveryAddressTwoChange.bind(this);
@@ -52,6 +56,30 @@ export default class FuelQuoteFormPage extends Component {
         })
     }
     handleUpdateDeliveryDate = e => this.setState({ deliveryDate: +e.target.value})
+
+    handleInStateChange = e => {
+        this.setState({
+            inState: e.target.value,
+        });
+        if (this.state.inState == "inState") {
+            this.state.inStateFactor = .03
+        }
+        else {
+            this.state.inStateFactor = .02
+        }
+      }
+
+      handleHistoryChange = e => {
+        this.setState({
+            hasHistory: e.target.value,
+        });
+        if (this.state.hasHistory == "yes") {
+            this.state.rateHistoryFactor = .01
+        }
+        else {
+            this.state.rateHistoryFactor = .00
+        }
+      }
 
     handleGallonsRequestedChange(e) {
         this.setState({
@@ -100,7 +128,7 @@ export default class FuelQuoteFormPage extends Component {
               deliveryAddressOne: this.state.deliveryAddressOne,
               deliveryAddressTwo: this.state.deliveryAddressTwo,
               deliveryDate: this.state.deliveryDate,
-              pricePerGallon: (Math.round(this.pricePerGallonDisplay() * 100) / 100).toFixed(2),
+              pricePerGallon: (Math.round(this.pricePerGallonDisplay() * 100) / 100).toFixed(4),
               totalDue: (Math.round(this.result() * 100) / 100).toFixed(2),
             }),
         };
@@ -129,6 +157,20 @@ export default class FuelQuoteFormPage extends Component {
                 <fieldset>
                     <legend>Fuel Quote Information</legend>
                     <ul>
+                        <li>
+                            <label for="inState">TESTING State: </label>
+                            <select name = "inState" id="inState" onChange={this.handleInStateChange}>
+                                <option value = "inState">In State</option>
+                                <option value = "outState" selected>Out of State</option>
+                            </select>
+                        </li>
+                        <li>
+                            <label for="hasHistory">TESTING History: </label>
+                            <select name = "hasHistory" id="hasHistory" onChange={this.handleHistoryChange}>
+                                <option value = "yes">Yes</option>
+                                <option value = "no" selected>No</option>
+                            </select>
+                        </li>
                         <li>
                             <label for="gallonsRequested">Gallons Requested: </label>
                             <input type="number" id="gallonsRequested" required min={0} onChange={this.handleUpdateGallonsRequested}/>

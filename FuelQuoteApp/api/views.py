@@ -37,14 +37,20 @@ class GetLoginView(APIView):
     def get(self, request, format=None):
         usernameString = request.GET.get('username')
         passwordString = request.GET.get('password')
-        print(usernameString)
-        print(passwordString)
         exist = Login.objects.filter(username=usernameString, password=passwordString).exists()
         if exist == True:
             return Response(status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
+class GetProfileView(APIView):
+    serializer_class = UserProfileSerializer
+
+    def get(self, request, format=None):
+        usernameString = request.GET.get('fullName')
+        users = UserProfile.objects.filter(fullName=usernameString)
+        serializer = UserProfileSerializer(users, many=True)
+        return Response(serializer.data)
 
 class GetFuelQuoteFormView(APIView):
     serializer_class = FuelQuoteFormSerializer
